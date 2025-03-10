@@ -72,4 +72,4 @@ async def test_solver():
     await move_request("right")
     await move_request("down")
     #print(game_state)
-    assert game_state["health"] == 666
+    assert game_state["health"] == ARRIVE_AT_DESTINATION_HEALTH
