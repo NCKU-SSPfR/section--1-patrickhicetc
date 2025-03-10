@@ -5,6 +5,7 @@ USERNAME = "TestUser"
 RESET_URL = f"http://127.0.0.1:8000/api/v1/reset?username={USERNAME}"
 LOGIN_URL = f"http://127.0.0.1:8000/api/v1/login"
 MOVE_URL = "http://127.0.0.1:8000/api/v1/move"
+ARRIVE_AT_DESTINATION_HEALTH = 666
 game_state = {}
 
 async def login_request():
@@ -57,4 +58,4 @@ async def test_solver():
     for i in range(5):
         await move_request("down")
     #print(game_state)
-    assert game_state["health"] == 666
+    assert game_state["health"] == ARRIVE_AT_DESTINATION_HEALTH
