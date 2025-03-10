@@ -1,5 +1,8 @@
 FROM python:3.11
 
+RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /app
+USER appuser
+
 WORKDIR /app
 
 COPY requirements.txt .
