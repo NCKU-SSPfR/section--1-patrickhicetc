@@ -6,11 +6,11 @@ RUN groupadd -r appgroup && \
 
 WORKDIR /app
 
-COPY --chown=appuser:appgroup requirements.txt /app/requirements.txt
+COPY --chown=appuser:appgroup ./requirements.txt /app/requirements.txt
 
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-COPY --chown=appuser:appgroup . /app/
+COPY --chown=appuser:appgroup ./src /app/src
 
 USER appuser
 
