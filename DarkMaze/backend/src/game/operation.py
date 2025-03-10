@@ -1,55 +1,26 @@
 from ..database.operation import save_game_state
 from .judge import hit_obstacle, game_over, arrive_at_destination
 
+ARRIVE_AT_DESTINATION_HEALTH = 666
+
 def move_location(game_state, direction):
     if game_over(game_state["health"]):
         return game_state
     
     x, y = game_state["current_position"]
     
+    move_directions = {
+        "up": (0, -1),
+        "down": (0, 1),
+        "left": (-1, 0),
+        "right": (1, 0)
+    }
+    
     # Update position based on direction
-    if direction == "up" and y > 0:
-        y -= 1
-    elif direction == "down" and y < game_state["map_size"][1] - 1:
-        y += 1
-    elif direction == "left" and x > 0:
-        x -= 1
-    elif direction == "right" and x < game_state["map_size"][0] - 1:
-        x += 1
-    elif direction == "up" and y > 0:
-        y += 1
-    elif direction == "down" and y < game_state["map_size"][1] - 1:
-        y -= 1
-    elif direction == "left" and x > 0:
-        x += 1
-    elif direction == "right" and x < game_state["map_size"][0] - 1:
-        x -= 1
-    elif direction == "up" and y > 0:
-        x += 1
-    elif direction == "down" and y < game_state["map_size"][1] - 1:
-        x -= 1
-    elif direction == "left" and x > 0:
-        y += 1
-    elif direction == "right" and x < game_state["map_size"][0] - 1:
-        y -= 1
-    elif direction == "up" and y > 0:
-        y += 1
-    elif direction == "down" and y < game_state["map_size"][1] - 1:
-        y -= 1
-    elif direction == "left" and x > 0:
-        x += 1
-    elif direction == "right" and x < game_state["map_size"][0] - 1:
-        x -= 1
-    elif direction == "up" and y > 0:
-        x += 1
-    elif direction == "down" and y < game_state["map_size"][1] - 1:
-        x -= 1
-    elif direction == "left" and x > 0:
-        y += 1
-    elif direction == "right" and x < game_state["map_size"][0] - 1:
-        y -= 1
-
-    new_position = [x, y]
+    dx, dy = move_directions[direction]
+    new_x, new_y = x + dx, y + dy
+    if 0 <= new_x < game_state["map_size"][0] and 0 <= new_y < game_state["map_size"][1]:
+        new_position = [new_x, new_y]
 
     if hit_obstacle(new_position, game_state["current_level_name"]):
         # Update health
@@ -64,7 +35,7 @@ def move_location(game_state, direction):
 
     if arrive_at_destination(game_state["current_level_name"], game_state["current_position"]):
         # Game won
-        game_state["health"] = 666
+        game_state["health"] = ARRIVE_AT_DESTINATION_HEALTH
 
     # Update database
     save_game_state(game_state['username'], game_state["current_level_name"], game_state["map_size"],
