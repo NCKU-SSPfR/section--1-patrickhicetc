@@ -10,7 +10,6 @@ game_state = {}
 
 async def login_request():
     """Simulates a frontend login."""
-    
     payload = {"username": USERNAME}
     
     async with httpx.AsyncClient() as client:
@@ -20,7 +19,7 @@ async def login_request():
 
 async def reset_request():
     """Reset Game state"""
-
+    global game_state
     async with httpx.AsyncClient() as client:
         response = await client.get(RESET_URL)
 
@@ -30,7 +29,7 @@ async def reset_request():
 
 async def move_request(dir):
     """Simulates a frontend move request."""
-
+    global game_state
     payload = {"username": USERNAME, "direction": dir}
     
     async with httpx.AsyncClient() as client:
@@ -42,6 +41,7 @@ async def move_request(dir):
 
 @pytest.mark.asyncio
 async def test_integration():
+    global game_state
     await login_request()
     #print(game_state)
     await reset_request()
@@ -53,6 +53,7 @@ async def test_integration():
 
 @pytest.mark.asyncio
 async def test_solver():
+    global game_state
     await login_request()
     await reset_request()
     for i in range(5):
