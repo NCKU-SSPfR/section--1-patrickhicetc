@@ -71,7 +71,7 @@ services:
     ports:
       - "8088:8088"
     volumes:
-      - ./frontend:/app
+      - ./frontend/src:/app/src
     command: uvicorn src.main:app --host "0.0.0.0" --port 8088 --reload
 
   backend:
@@ -83,7 +83,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
+      - ./backend/src:/app/src
     command: uvicorn src.main:app --host "0.0.0.0" --port 8000 --reload
 
 networks:
